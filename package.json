@@ -1,0 +1,19 @@
+{
+  "name": "projet",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "fan",
+    "orsys"
+  ],
+  "author": "Jean-Louis GUENEGO",
+  "license": "ISC",
+  "devDependencies": {
+    "bower": "1.7.9",
+    "express": "4.14.0"
+  }
+}

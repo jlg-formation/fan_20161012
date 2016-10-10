@@ -1,0 +1,21 @@
+{
+  "name": "projet",
+  "description": "",
+  "main": "index.js",
+  "authors": [
+    "Jean-Louis GUENEGO"
+  ],
+  "license": "ISC",
+  "keywords": [
+    "fan",
+    "orsys"
+  ],
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
