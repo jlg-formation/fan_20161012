@@ -4,4 +4,13 @@
 	<li ng-repeat="country in countries">{{country}}</li>
 </ul>
 
-<ors-star></ors-star><br/>
+<ors-star readonly note="2"></ors-star><br/>
+<ors-star note="6"></ors-star><br/>
+<ors-star note="-2"></ors-star><br/>
+<ors-star note="qsdfsqdf"></ors-star><br/>
+<input type="number" ng-model="myNote" /><br/>
+myNote = {{myNote}}<br/>
+<ors-star note="myNote"></ors-star><br/>
+<input type="number" ng-model="myNote2" /><br/>
+myNote2 = {{myNote2}}<br/>
+<ors-star note="myNote2"></ors-star><br/>

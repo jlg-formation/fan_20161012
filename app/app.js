@@ -37,23 +37,48 @@
 		};
 	});
 	
-	app.directive('orsStar', function() {
+	app.directive('orsStar', ['$compile', function($compile) {
 		return {
 			restrict: 'E',
+			scope: {
+				n: '=note'
+			},
 			link: function(scope, element, attr) {
 				console.log('link', arguments);
-				var html = '';
-				var note = 4;
-				for (var i = 0; i < note; i++) {
-					html += '<img src="img/yellow_star.png" />';
-				}
-				for (var i = note; i < 5; i++) {
-					html += '<img src="img/white_star.png" />';
-				}
-				element.html(html);
+				
+				scope.update = function(note) {
+					console.log('update', arguments);
+					scope.n = note;
+				};
+				scope.$watch('n', function() {
+					var html = '';
+					var note = Number(scope.n);
+					note = (isNaN(note)) ? 3 : note;
+					note = (note > 5) ? 5 : note;
+					note = (note < 0) ? 0 : note;
+					for (var i = 0; i < note; i++) {
+						if ('readonly' in attr) {
+							html += '<img src="img/yellow_star.png" />';
+						} else {
+							html += '<img ng-click="update(' + (i + 1) + ')" src="img/yellow_star.png" />';
+						}
+						
+					}
+					for (var i = note; i < 5; i++) {
+						if ('readonly' in attr) {
+							html += '<img src="img/white_star.png" />';
+						} else {
+							html += '<img ng-click="update(' + (i + 1) + ')" src="img/white_star.png" />';
+						}
+						
+					}
+					element.html(html);
+					$compile(element.contents())(scope);
+				});
+				
 				
 			}
 		};
-	});
+	}]);
 	
 })();
