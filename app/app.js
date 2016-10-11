@@ -1,7 +1,28 @@
 (function() {
 	'use strict';
 
-	var app = angular.module('myApp', []);
+	var app = angular.module('myApp', ['ngRoute']);
+	
+	app.config(['$routeProvider', function($routeProvider) {
+
+		$routeProvider
+			.when('/', {
+				templateUrl: 'tmpl/routes/index.html'
+			})
+			.when('/products', {
+				templateUrl: 'tmpl/routes/products.html'
+			})
+			.when('/services', {
+				templateUrl: 'tmpl/routes/services.html'
+			})
+			.when('/contact', {
+				templateUrl: 'tmpl/routes/contact.html'
+			})
+			.otherwise({
+				redirectTo: '/'
+			});
+	}]);
+	
 	
 	app.run(['$rootScope', function($rootScope) {
 		

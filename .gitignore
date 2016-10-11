@@ -2,3 +2,4 @@
 *node_modules*
 *.log
 *.bak
+/npm-debug.log.2520740102
