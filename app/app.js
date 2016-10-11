@@ -2,6 +2,16 @@
 	'use strict';
 
 	var app = angular.module('myApp', []);
+	
+	app.run(['$rootScope', function($rootScope) {
+		
+		$rootScope.countries = [
+			'France',
+			'Allemagne',
+			'Italie',
+			'Belgique'
+		];
+	}]);
 
 	app.directive('ndHeader', function() {
 		return {
