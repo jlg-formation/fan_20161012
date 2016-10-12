@@ -47,16 +47,35 @@
 		
 		$rootScope.logs = [];
 		
+		var isSpinStarted = false;
+		
+		var startSpin = function() {
+			isSpinStarted = true;
+			
+			setTimeout(function(){
+				if (isSpinStarted) {
+					$rootScope.showSpinner = true;
+				}
+			}, 500);
+		
+		};
+		
+		var stopSpin = function() {
+			isSpinStarted = false;
+			$rootScope.showSpinner = false;			
+		};
+
+		
 		$rootScope.startWs = function() {
 			console.log('startWs', arguments);
-			$rootScope.showSpinner = true;
+			startSpin();
 			$rootScope.logs.push('calling s1');
 			$http.get('/ws/s1')
 				.then(function(response) {
 					console.log('response', response);
 					$rootScope.logs.push('s1 response : ' + response.data.result);
 					$rootScope.logs.push('calling s2, s3 and s4');
-					return $q.all([$http.get('/ws/s2'), $http.get('/ws/s31'), $http.get('/ws/s4')]);
+					return $q.all([$http.get('/ws/s2'), $http.get('/ws/s3'), $http.get('/ws/s4')]);
 				})
 				.then(function(responses) {
 					console.log('then all', responses);
@@ -77,7 +96,7 @@
 					$rootScope.logs.push('finished.');
 				})
 				.finally(function() {
-					$rootScope.showSpinner = false;
+					stopSpin();
 				})
 				.catch(function(error) {
 					$rootScope.logs.push('error.');
