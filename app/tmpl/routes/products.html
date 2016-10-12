@@ -1,2 +1,9 @@
 <h1>Products</h1>
 
+<button ng-click="startWs()">Start</button>
+<button ng-click="cleanContent()">Clean</button>
+<br/>
+<ul>
+	<li ng-repeat="line in logs track by $index">{{line}}</li>
+</ul>
+

@@ -13,9 +13,16 @@
 	app.use(express.static('./app'));
 	app.use(serveIndex('./app', {icons: true}));
 	
-	app.all('/*', function(req, res) {
+	app.all('/products*', function(req, res) {
 		res.sendFile('./app/index.html', { root: __dirname });
 	});
+	app.all('/services*', function(req, res) {
+		res.sendFile('./app/index.html', { root: __dirname });
+	});
+	app.all('/contact*', function(req, res) {
+		res.sendFile('./app/index.html', { root: __dirname });
+	});
+	
 
 	app.use(function(req, res, next) {
 		console.log('404: Page not Found', req.url);

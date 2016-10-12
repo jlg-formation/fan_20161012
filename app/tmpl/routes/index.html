@@ -1,7 +1,7 @@
 <h1>Body</h1>
 
 <ul>
-	<li ng-repeat="country in countries">{{country}}</li>
+	<li ng-repeat="country in countries track by $index">{{country}}</li>
 </ul>
 
 <ors-star readonly note="2"></ors-star><br/>

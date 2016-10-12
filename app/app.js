@@ -1,7 +1,7 @@
 (function() {
 	'use strict';
 
-	var app = angular.module('myApp', ['ngRoute']);
+	var app = angular.module('myApp', ['ngRoute', 'angularSpinner']);
 	
 	app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
 		$locationProvider
@@ -27,14 +27,68 @@
 	}]);
 	
 	
-	app.run(['$rootScope', function($rootScope) {
+	app.run(['$injector', function($injector) {
+		
+		var $rootScope = $injector.get('$rootScope');
+		var $http = $injector.get('$http');
+		var $q = $injector.get('$q');
+		var $timeout = $injector.get('$timeout');
+		
 		
 		$rootScope.countries = [
 			'France',
 			'Allemagne',
+			'France',
 			'Italie',
 			'Belgique'
 		];
+		
+		$rootScope.showSpinner = false;
+		
+		$rootScope.logs = [];
+		
+		$rootScope.startWs = function() {
+			console.log('startWs', arguments);
+			$rootScope.showSpinner = true;
+			$rootScope.logs.push('calling s1');
+			$http.get('/ws/s1')
+				.then(function(response) {
+					console.log('response', response);
+					$rootScope.logs.push('s1 response : ' + response.data.result);
+					$rootScope.logs.push('calling s2, s3 and s4');
+					return $q.all([$http.get('/ws/s2'), $http.get('/ws/s31'), $http.get('/ws/s4')]);
+				})
+				.then(function(responses) {
+					console.log('then all', responses);
+					$rootScope.logs.push('s2, s3, s4 responses : ' +
+						responses.map(function(response) { return response.data.result; }).join(' '));
+					$rootScope.logs.push('calling s5');
+					return $http.get('/ws/s5');
+				})
+				.then(function(response) {
+					$rootScope.logs.push('s5 response : ' + response.data.result);
+					return $q.reject('whatever...error');
+				})
+				.then(function() {
+					$rootScope.logs.push('wait for 2s');
+					return $timeout(2000);
+				})
+				.then(function() {
+					$rootScope.logs.push('finished.');
+				})
+				.finally(function() {
+					$rootScope.showSpinner = false;
+				})
+				.catch(function(error) {
+					$rootScope.logs.push('error.');
+					console.error('error', error);
+				});
+			
+		};
+		
+		$rootScope.cleanContent = function() {
+			$rootScope.logs = [];
+		};
 	}]);
 
 	app.directive('ndHeader', function() {

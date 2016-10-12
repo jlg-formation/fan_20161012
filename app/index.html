@@ -6,11 +6,14 @@
 		<link rel="stylesheet" href="style.css" />
 	</head>
 	<body ng-app="myApp">
+		<span us-spinner="{radius:30, width:8, length: 16}" spinner-on="showSpinner"></span>
 		<nd-header></nd-header>
 		<nd-body></nd-body>
 		<nd-footer></nd-footer>
+		<script src="bower_components/spin.js/spin.js"></script>
 		<script src="bower_components/angular/angular.js"></script>
 		<script src="bower_components/angular-route/angular-route.min.js"></script>
+		<script src="bower_components/angular-spinner/angular-spinner.js"></script>
 		<script src="app.js"></script>
 		
 	</body>
