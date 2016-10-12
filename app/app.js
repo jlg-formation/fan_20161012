@@ -1,7 +1,7 @@
 (function() {
 	'use strict';
 
-	var app = angular.module('myApp', ['ngRoute', 'angularSpinner']);
+	var app = angular.module('myApp', ['ngRoute', 'angularSpinner', 'interceptor']);
 	
 	app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
 		$locationProvider
@@ -42,33 +42,11 @@
 			'Italie',
 			'Belgique'
 		];
-		
-		$rootScope.showSpinner = false;
-		
+				
 		$rootScope.logs = [];
-		
-		var isSpinStarted = false;
-		
-		var startSpin = function() {
-			isSpinStarted = true;
-			
-			setTimeout(function(){
-				if (isSpinStarted) {
-					$rootScope.showSpinner = true;
-				}
-			}, 500);
-		
-		};
-		
-		var stopSpin = function() {
-			isSpinStarted = false;
-			$rootScope.showSpinner = false;			
-		};
-
-		
+						
 		$rootScope.startWs = function() {
 			console.log('startWs', arguments);
-			startSpin();
 			$rootScope.logs.push('calling s1');
 			$http.get('/ws/s1')
 				.then(function(response) {
@@ -96,7 +74,6 @@
 					$rootScope.logs.push('finished.');
 				})
 				.finally(function() {
-					stopSpin();
 				})
 				.catch(function(error) {
 					$rootScope.logs.push('error.');
